@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { Provider } from "./components/ui/provider";
+import { Button, Container, Flex, VStack } from "@chakra-ui/react";
+import { ContainerCard } from "./components/container-card/containerCard";
+import { ContainerHistory } from "./components/container-history/containerHistory";
+import { Navbar } from "./components/navbar/navbar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Container maxW="container.xl" position="relative" p={4}>
+        <Navbar />
+      </Container>
+      <Flex>
+        <Container>
+          <VStack spacing={4} align="center">
+            <ContainerCard />
+            <Button colorPalette="teal" variant="solid">
+              Generar Nuevo Código
+            </Button>
+          </VStack>
+        </Container>
+        <Container>
+          <ContainerHistory />
+        </Container>
+      </Flex>
+    </Container>
   );
 }
 
