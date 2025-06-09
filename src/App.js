@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Provider } from "./components/ui/provider";
+import { Toaster } from "./components/ui/toaster";
 import { Button, Container, Flex, VStack } from "@chakra-ui/react";
 import { ContainerCard } from "./components/container-card/containerCard";
 import { ContainerHistory } from "./components/container-history/containerHistory";
@@ -25,6 +25,7 @@ function App() {
           <ContainerHistory />
         </Container>
       </Flex>
+      <Toaster />
     </Container>
   );
 }
