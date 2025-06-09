@@ -1,7 +1,8 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 
 const path = require("path");
 const isDev = require("electron-is-dev");
+const AppDataSource = require("./data-source");
 
 require("@electron/remote/main").initialize();
 
@@ -11,8 +12,10 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: true,
+      nodeIntegration: false,
+      contextIsolation: true,
+      enableRemoteModule: false,
+      preload: path.join(__dirname, "preload.js"),
     },
   });
 
@@ -34,4 +37,21 @@ app.on("activate", function () {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
+
+app.whenReady().then(async () => {
+  await AppDataSource.initialize();
+  const repo = AppDataSource.getRepository("CodigosDeBarra");
+
+  // INSERT desde React
+  ipcMain.handle("insert-codigo", async () => {
+    const nuevo = await repo.save({});
+    return nuevo;
+  });
+
+  // SELECT desde React
+  ipcMain.handle("get-codigos", async () => {
+    const codigos = await repo.find({ order: { id: "DESC" } });
+    return codigos;
+  });
 });

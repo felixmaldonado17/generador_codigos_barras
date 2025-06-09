@@ -1,4 +1,4 @@
-import { Box, Container, Flex, IconButton, Text } from "@chakra-ui/react";
+import { Container, Flex, Text } from "@chakra-ui/react";
 import { ColorModeButton } from "../ui/color-mode";
 
 export const Navbar = () => {
