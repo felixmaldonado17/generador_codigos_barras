@@ -30,18 +30,40 @@ export const ContainerCard = ({ barcodeId, fecha }) => {
     });
   };
 
+  const handlePrint = () => {
+    const printContent = document.getElementById("print-area")?.innerHTML;
+    if (printContent) {
+      const printWindow = window.open("", "", "width=600,height=600");
+      if (printWindow) {
+        printWindow.document.write(`
+         <html>
+           <head>
+             <title>Imprimir Código</title>
+           </head>
+           <body>${printContent}</body>
+         </html>
+       `);
+        printWindow.document.close();
+        printWindow.print();
+      }
+    }
+  };
+
   return (
     <Card.Root width="320px">
-      <Center>
-        <Barcode id={barcodeId} />
-      </Center>
+      <div id="print-area">
+        <Center>
+          <Barcode id={barcodeId} />
+        </Center>
+      </div>
+
       <Card.Body gap="2">
         <HStack mt="4">
           <Card.Title>Detalle de Código</Card.Title>
           <Button size="sm" colorPalette="black" onClick={handleCopy} variant="ghost">
             <LuCopy />
           </Button>
-          <Button size="sm" colorPalette="black" variant="ghost">
+          <Button size="sm" colorPalette="black" onClick={handlePrint} variant="ghost">
             <LuPrinter />
           </Button>
         </HStack>
